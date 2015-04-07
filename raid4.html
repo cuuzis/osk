@@ -27,8 +27,8 @@
         <div class="well" style="min-height: 600px;">
             <div class="row">
                 <div class="col-md-1">
-					<div style="position: absolute; width:400px; height: 200px; left: 400px;top: -10px;border: 2px;border-style: dashed;border-color: blue;"> </div>
-					<h3 style="position: absolute; left: 820px;">RAID controller</h3>
+					<div style="position: absolute; width:500px; height: 200px; left: 350px;top: -10px;border: 2px;border-style: dashed;border-color: blue;"> </div>
+					<h3 style="position: absolute; left: 860px;">RAID controller</h3>
 					
                     <img src="Content/Images/server.png" height="200" width="128" />
                     <h3>Server</h3>
@@ -95,7 +95,6 @@
 		var diskCount = 4;
 		var dataBlockCount = 3;
 		var animationDuration = 500;
-		var animationDelay = 0;
 		
 		$( document ).ready ( function () {
 			// Izveido diskus
@@ -126,54 +125,55 @@
 		
         $("#write").click(function () {
 			var delaysForRows = 1500;
-            WriteDataBlocks(animationDelay, animationDuration, 1);
-			window.setTimeout(function() {WriteDataBlocks(80, animationDuration,2);}, delaysForRows);
-			window.setTimeout(function() {WriteDataBlocks(80, animationDuration,3);}, delaysForRows*2);
-			window.setTimeout(function() {WriteDataBlocks(80, animationDuration,4);}, delaysForRows*3);
+            WriteDataBlocks( animationDuration, 1);
+			window.setTimeout(function() {WriteDataBlocks(animationDuration,2);}, delaysForRows);
+			window.setTimeout(function() {WriteDataBlocks(animationDuration,3);}, delaysForRows*2);
+			window.setTimeout(function() {WriteDataBlocks(animationDuration,4);}, delaysForRows*3);
         });
 		
 		$("#read").click(function () {
-            WriteDataBlocks(0, 0, 1);
-			WriteDataBlocks(0, 0, 2);
-			WriteDataBlocks(0, 0, 3);
-			WriteDataBlocks(0, 0, 4);
+            WriteDataBlocks(0, 1);
+			WriteDataBlocks(0, 2);
+			WriteDataBlocks(0, 3);
+			WriteDataBlocks(0, 4);
 			window.setTimeout(function() {
-				ReadDataBlocks(animationDelay, animationDuration, 1); 
-				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 2); } , animationDuration*2 );
-				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 3); } , animationDuration*3 );
-				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 4); } , animationDuration*4 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 1);} , animationDuration*5 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 2);} , animationDuration*6 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 3);} , animationDuration*7 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 4);} , animationDuration*8 );
+				ReadDataBlocks(animationDuration, 1); 
+				window.setTimeout(function() {ReadDataBlocks(animationDuration, 2); } , animationDuration*2 );
+				window.setTimeout(function() {ReadDataBlocks(animationDuration, 3); } , animationDuration*3 );
+				window.setTimeout(function() {ReadDataBlocks( animationDuration, 4); } , animationDuration*4 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 1);} , animationDuration*5 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 2);} , animationDuration*6 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 3);} , animationDuration*7 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 4);} , animationDuration*8 );
 			}, animationDuration * 2);
         });
 		
 		$("#failure").click(function () {
-            WriteDataBlocks(0, 0, 1);
-			WriteDataBlocks(0, 0, 2);
-			WriteDataBlocks(0, 0, 3);
-			WriteDataBlocks(0, 0, 4);
+            WriteDataBlocks(0, 1);
+			WriteDataBlocks(0, 2);
+			WriteDataBlocks(0, 3);
+			WriteDataBlocks(0, 4);
 			RuinDisk(0);
 			HideDataBlocks(1);
 			window.setTimeout(function() {
-				ReadDataBlocks(animationDelay, animationDuration, 1);//Hidden blocks
-				ReadParity(animationDelay, animationDuration, 1);
-				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 2); ReadParity(animationDelay, animationDuration, 2);} , animationDuration*2 );
-				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 3); ReadParity(animationDelay, animationDuration, 3);} , animationDuration*3 );
-				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 4); ReadParity(animationDelay, animationDuration, 4);} , animationDuration*4 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 1); HideParity(1); ShowDataBlocks(1);} , animationDuration*5 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 2); HideParity(2); ShowDataBlocks(2);} , animationDuration*6 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 3); HideParity(3); ShowDataBlocks(3);} , animationDuration*7 );
-				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 4); HideParity(4); ShowDataBlocks(4);} , animationDuration*8 );
-			}, animationDuration * 2);
+				ReadDataBlocks(animationDuration, 1);//Hidden blocks too
+				ReadParity(animationDuration, 1);
+				window.setTimeout(function() {ReadDataBlocks(animationDuration, 2); ReadParity(animationDuration, 2);} , animationDuration*2 );
+				window.setTimeout(function() {ReadDataBlocks(animationDuration, 3); ReadParity(animationDuration, 3);} , animationDuration*3 );
+				window.setTimeout(function() {ReadDataBlocks(animationDuration, 4); ReadParity(animationDuration, 4);} , animationDuration*4 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 1); HideParity(1); ShowDataBlocks(1);} , animationDuration*5 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 2); HideParity(2); ShowDataBlocks(2);} , animationDuration*6 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 3); HideParity(3); ShowDataBlocks(3);} , animationDuration*7 );
+				window.setTimeout(function() {SendDataToServer(animationDuration, 4); HideParity(4); ShowDataBlocks(4);} , animationDuration*8 );
+			}, animationDuration * 4);
+			window.setTimeout(function() {FixDisk(0);}, animationDuration * 14);
         });
 
         $("#reload").click(function () {
             location.reload(true);
         });
 		
-		function WriteDataBlocks(delay, duration, lineNr) {
+		function WriteDataBlocks(duration, lineNr) {
 			if( $('#D3').length ) {
 				 return;
 			}
@@ -229,7 +229,6 @@
 				$("#data-blocks"+lineNr+" div.data-block").each(function (i, elem) {
 					
 					$(elem)
-						.delay(i * delay)
 						.animate({ top: '200px' }, duration)
 						.animate({ left: left + 'px' }, duration)
 						.animate({ top: topSpacing }, duration);
@@ -249,44 +248,44 @@
 			
 		};
 		
-		function ReadDataBlocks(delay, duration, lineNr) {
+		function ReadDataBlocks(duration, lineNr) {
 			//Data blocks go to controller											
 			$('#data-blocks' + lineNr + ' div.data-block').each(function (i, elem) {
                 $(elem)
-					.delay(i * delay)
                     .animate({ top: '200px' }, duration)
-                    .animate({ left: (400 + ((lineNr %2) * 115)) +'px' }, duration)
+                    .animate({ left: (250 + ((lineNr) * 115)) +'px' }, duration)
 					.animate({ top: i*40+'px' }, duration);
             });
 		};
 		
-		function ReadParity(delay, duration, lineNr) {
+		function ReadParity(duration, lineNr) {
 			//Parity blocks go to controller		
 			$('#data-blocks' + lineNr + ' div.parity-block').each(function (i, elem) {
                 $(elem)
-					.delay(i * delay)
                     .animate({ top: '200px' }, duration)
-                    .animate({ left: (400 + ((lineNr %2) * 115)) +'px' }, duration)
+                    .animate({ left: (250 + ((lineNr) * 115)) +'px' }, duration)
 					.animate({ top: i*40+'px' }, duration);
             });
 		};
 		
-		function SendDataToServer(delay, duration, lineNr) {
+		function SendDataToServer(duration, lineNr) {
 			$('#data-blocks' + lineNr + ' div.data-block').each(function (i, elem) {
-                $(elem)
-					.delay(delay)
-                    .animate({ left: '100px' }, duration);
+                $(elem).animate({ left: '100px' }, duration);
             });
 			
 			setTimeout(function () {
 		        $('#data-blocks' + lineNr + ' div.data-block').each(function (i, elem) {
-		            $(elem).hide();
+		            $(elem).remove();
 		        });
-		    }, 2000);
+				HideParity(lineNr);
+		    }, animationDuration*2);
 		};
 		
 		function RuinDisk(index) {
 			$("#di" + index).attr("src","Content/Images/diskX.png");
+		};
+		function FixDisk(index) {
+			$("#di" + index).attr("src","Content/Images/disk.png");
 		};
 		
 		function HideDataBlocks(lineNr) {
