@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>RAID 0</title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/raid.css" rel="stylesheet" />
+</head>
+<body style="background-color: #F8F8FF">
+    <div class="container">
+        <br />
+        <div class="well">
+            <h1>Choose a specific RAID level!</h1>
+            <div class="btn-group btn-group-lg" role="group" aria-label="...">
+                <a role="button" class="btn btn-default" href="./raid0.html">0</a>
+                <a role="button" class="btn btn-default active" href="./raid1.html">1</a>
+                <button type="button" class="btn btn-default">2</button>
+                <button type="button" class="btn btn-default">3</button>
+                <button type="button" class="btn btn-default">4</button>
+                <button type="button" class="btn btn-default">5</button>
+                <button type="button" class="btn btn-default">6</button>
+                <button type="button" class="btn btn-default">1+0</button>
+            </div>
+        </div>
+        <hr />
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">RAID LEVEL 1: Mirroring & Duplexing</div>
+            <div class="panel-body">
+                For Highest performance, the controller must be able to perform two concurrent separate Reads per mirrored pair or two duplicate Writes per mirrored pair.
+                RAID Level 1 requires a minimum of 2 drives to implement
+            </div>
+            <div class="panel-footer">
+                <b>Characteristics and Advantages</b>
+                <ul>
+                    <li>One Write or two Reads possible per mirrored pair</li>
+                    <li>Twice the Read transaction rate of single disks, same Write transaction rate as single disks</li>
+                    <li>100% redundancy of data means no rebuild is necessary in case of a disk failure, just a copy to the replacement disk</li>
+                    <li>Transfer rate per block is equal to that of a single disk</li>
+                    <li>Under certain circumstances, RAID 1 can sustain multiple simultaneous drive failures</li>
+                    <li>Simplest RAID storage subsystem design</li>
+                </ul>
+                <b>Disadvantages</b>
+                <ul>
+                    <li>Highest disk overhead of all RAID types (100%) - inefficient</li>
+                    <li>Typically the RAID function is done by system software, loading the CPU/Server and possibly degrading throughput at high activity levels. Hardware implementation is strongly recommended</li>
+                    <li>May not support hot swap of failed disk when implemented in "software"</li>
+                </ul>
+                <b>Recommended Applications</b>
+                <ul>
+                    <li>Accounting</li>
+                    <li>Payroll</li>
+                    <li>Financial</li>
+                    <li>Any application requiring very high availability</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="well" style="min-height: 600px;">
+            <div class="row">
+                <div class="col-md-1">
+                    <img src="Content/Images/server.png" height="200" width="128" />
+                    <h3>Server</h3>
+                </div>
+                <div class="col-md-3" id="data-blocks"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="disk-images"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" id="animate" class="btn btn-primary btn-lg">Visualize</button>
+                <button type="button" id="reload" class="btn btn-default btn-lg">Reload page</button>
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <script src="Scripts/jquery-2.1.3.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $("#animate").click(function () {
+            var dataBlocks = [];
+            var diskImages = [];
+
+            for (var i = 0; i < 16; i++) {
+                dataBlocks.push("DataBlock" + i);
+            }
+
+            for (var i = 0; i < 4; i++) {
+                diskImages.push("di" + i);
+            }
+
+            for (var i = 0; i < dataBlocks.length; i++) {
+                $("#data-blocks").append('<div id="' + dataBlocks[i] + '" class="data-block">' + dataBlocks[i] + '</div>');
+            }
+
+            for (var i = 0; i < diskImages.length; i++) {
+                $("#disk-images").append('<img src="Content/Images/disk.png" id="' + diskImages[i] + '" class="disk-image" />');
+            }
+
+            $("#disk-images").append('<h3 id="diskArrayTitle">Disk array</h3>');
+
+            var leftImage = 200;
+
+            $('#disk-images img').each(function (i, elem) {
+                $(elem)
+                    .show()
+                    .animate({ left: leftImage + 'px' }, "fast");
+
+                leftImage += 200;
+            });
+
+            $('#diskArrayTitle')
+                .animate({ left: '520px' }, "fast")
+                .animate({ top: '265px' }, "fast");
+
+            var left = 130;
+            var top = 300;
+            var counter = 0;
+
+            $('#data-blocks div').each(function (i, elem) {
+                $(elem)
+                    .delay(i * 800)
+                    .show()
+                    .animate({ left: left + 'px' }, 2000)
+                    .animate({ top: top + 'px' }, 2000);
+
+                left += 200;
+                counter++;
+
+                if (counter === 4) {
+                    left = 130;
+                    top += 40;
+                    counter = 0;
+                }
+            });
+        });
+
+        $("#reload").click(function () {
+            location.reload(true);
+        });
+    </script>
+</body>
+</html>
