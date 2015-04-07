@@ -11,11 +11,11 @@
         <div class="well">
             <h1>Choose a specific RAID level!</h1>
             <div class="btn-group btn-group-lg" role="group" aria-label="...">
-                <a role="button" class="btn btn-default active" href="./raid0.html">0</a>
+                <a role="button" class="btn btn-default" href="./raid0.html">0</a>
                 <a role="button" class="btn btn-default" href="./raid1.html">1</a>
                 <button type="button" class="btn btn-default">2</button>
                 <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default">4</button>
+                <button type="button" class="btn btn-default active">4</button>
                 <button type="button" class="btn btn-default">5</button>
                 <button type="button" class="btn btn-default">6</button>
                 <button type="button" class="btn btn-default">1+0</button>
@@ -50,7 +50,7 @@
         <br />
 		
 		<div class="panel panel-primary">
-            <div class="panel-heading">RAID LEVEL 0: Striped Disk Array without Fault Tolerance</div>
+            <div class="panel-heading">RAID LEVEL 4: ...</div>
             <div class="panel-body">
                 RAID Level 0 requires a minimum of 2 drives to implement
             </div>
@@ -87,11 +87,12 @@
 		// Reverse plugin
 		jQuery.fn.reverse = [].reverse;
 		
+		//constants
 		var diskSpacing = 200;
 		var diskCount = 4;
 		var dataBlockCount = 3;
-		
 		var animationDuration = 200;
+		var animationDelay = 80;
 		
 		$( document ).ready ( function () {
 			// Izveido diskus
@@ -121,21 +122,28 @@
 		
 		
         $("#write").click(function () {
-            WriteDataBlocks(80, animationDuration);
+            WriteDataBlocks(animationDelay, animationDuration);
         });
 		
 		$("#read").click(function () {
             WriteDataBlocks(0, 0);
 			window.setTimeout(function() {
-				ReadDataBlocks(80, animationDuration);
+				ReadDataBlocks(animationDelay, animationDuration);
+				window.setTimeout(function() {
+					SendDataToServer(animationDelay, animationDuration);
+				}, animationDuration * 5);
 			}, animationDuration * 2);
         });
 		
 		$("#failure").click(function () {
             WriteDataBlocks(0, 0);
+			RuinDisk(0);
 			window.setTimeout(function() {
-				ReadDataBlocks(80, animationDuration);
-				//SendDataToServer();
+				ReadDataBlocks(animationDelay, animationDuration);
+				ReadParity(animationDelay, animationDuration);
+				window.setTimeout(function() {
+					SendDataToServer(animationDelay, animationDuration);
+				}, animationDuration * 5);
 			},animationDuration*2);
         });
 
@@ -174,9 +182,9 @@
             
 			
 			window.setTimeout(function() {
-				//Data blocks go to disk
 				var left = 130;
 				
+				//Data blocks go to disk
 				$('#data-blocks div.data-block').each(function (i, elem) {
 					$(elem)
 						.delay(i * delay)
@@ -207,8 +215,31 @@
                     .animate({ left: '400px' }, duration)
 					.animate({ top: i*40+'px' }, duration);
             });
-			
 		};
+		
+		function ReadParity(delay, duration) {
+			//Parity blocks go to controller		
+			$('#data-blocks div.parity-block').each(function (i, elem) {
+                $(elem)
+					.delay(i * delay)
+                    .animate({ top: '200px' }, duration)
+                    .animate({ left: '550px' }, duration)
+					.animate({ top: '50px' }, duration);
+            });
+		};
+		
+		function SendDataToServer(delay, duration) {
+			$('#data-blocks div.data-block').each(function (i, elem) {
+                $(elem)
+					.delay(delay)
+                    .animate({ left: '100px' }, duration);
+            });
+		};
+		
+		function RuinDisk(index) {
+			$("#di" + index).attr("src","Content/Images/diskX.png");
+		};
+		
     </script>
 </body>
 </html>
