@@ -13,11 +13,11 @@
             <div class="btn-group btn-group-lg" role="group" aria-label="...">
                 <a role="button" class="btn btn-default" href="./raid0.html">0</a>
                 <a role="button" class="btn btn-default" href="./raid1.html">1</a>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default active">4</button>
-                <button type="button" class="btn btn-default">5</button>
-                <button type="button" class="btn btn-default">6</button>
+				<a role="button" class="btn btn-default" href="./raid2.html">2</a>
+				<a role="button" class="btn btn-default" href="./raid3.html">3</a>
+				<button type="button" class="btn btn-default active">4</button>
+				<a role="button" class="btn btn-default" href="./raid5.html">5</a>
+				<a role="button" class="btn btn-default" href="./raid6.html">6</a>
                 <button type="button" class="btn btn-default">1+0</button>
             </div>
         </div>
@@ -94,8 +94,8 @@
 		var diskSpacing = 200;
 		var diskCount = 4;
 		var dataBlockCount = 3;
-		var animationDuration = 300;
-		var animationDelay = 80;
+		var animationDuration = 500;
+		var animationDelay = 0;
 		
 		$( document ).ready ( function () {
 			// Izveido diskus
@@ -174,7 +174,7 @@
         });
 		
 		function WriteDataBlocks(delay, duration, lineNr) {
-			if( $('#A4').length ) {
+			if( $('#D3').length ) {
 				 return;
 			}
 			
@@ -306,7 +306,7 @@
 		function HideParity(lineNr) {
 			//Parity blocks go to controller		
 			$('#data-blocks' + lineNr + ' div.parity-block').each(function (i, elem) {
-                $(elem).hide();
+                $(elem).remove();
             });
 		};
 		
