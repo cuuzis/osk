@@ -21,6 +21,16 @@
     left: 0;
 }
 
+.disk-image-cross {
+    position: absolute;
+    height: 280px; 
+    width: 150px; 
+    z-index: 2;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
 .parity-block {
     height: 32px; 
     width: 105px; 
@@ -38,4 +48,8 @@
 }
 #diskArrayTitle {
     position: absolute;
+}
+
+.blockrows{
+  position: absolute;
 }

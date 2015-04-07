@@ -33,7 +33,10 @@
                     <img src="Content/Images/server.png" height="200" width="128" />
                     <h3>Server</h3>
                 </div>  
-                <div class="col-md-3" id="data-blocks"></div>
+                <div class="col-md-3 blockrows" id="data-blocks1"></div>
+				<div class="col-md-3 blockrows" id="data-blocks2"></div>
+				<div class="col-md-3 blockrows" id="data-blocks3"></div>
+				<div class="col-md-3 blockrows" id="data-blocks4"></div>
             </div>  
             <div class="row">
                 <div class="col-md-12" id="disk-images"></div>
@@ -122,7 +125,11 @@
 		
 		
         $("#write").click(function () {
-            WriteDataBlocks(animationDelay, animationDuration);
+			var delaysForRows = 1500;
+            WriteDataBlocks(animationDelay, animationDuration, 1);
+			window.setTimeout(function() {WriteDataBlocks(80, animationDuration,2);}, delaysForRows);
+			window.setTimeout(function() {WriteDataBlocks(80, animationDuration,3);}, delaysForRows*2);
+			window.setTimeout(function() {WriteDataBlocks(80, animationDuration,4);}, delaysForRows*3);
         });
 		
 		$("#read").click(function () {
@@ -151,23 +158,39 @@
             location.reload(true);
         });
 		
-		function WriteDataBlocks(delay, duration) {
+		function WriteDataBlocks(delay, duration, lineNr) {
 			if( $('#DataBlock1').length ) {
 				 return;
 			}
 			
             var dataBlocks = [];
-
-            for (var i = 0; i < dataBlockCount; i++) {
-                dataBlocks.push("DataBlock" + (i+1));
-            }
-
+				
+			var letter = "";
+			switch(lineNr){
+			case 1:
+				letter = "A";
+				break;
+			case 2:
+				letter = "B";
+				break;
+			case 3:
+				letter = "C";
+				break;
+			case 4:
+				letter = "D";
+				break;
+			}
+			
+			dataBlocks.push(letter + "1");
+			dataBlocks.push(letter + "2");
+			dataBlocks.push(letter + "3");
+			
             for (var i = 0; i < dataBlocks.length; i++) {
-                $("#data-blocks").append('<div id="' + dataBlocks[i] + '" class="data-block" style="top:'+i*40+'px">' + dataBlocks[i] + '</div>');
+                $("#data-blocks"+lineNr).append('<div id="' + dataBlocks[i] + '" class="data-block" style="top:'+i*40+'px">' + dataBlocks[i] + '</div>');
             }
             
 			//Blocks go to controller
-			$('#data-blocks div').each(function (i, elem) {
+			$('#data-blocks'+lineNr+' div').each(function (i, elem) {
                 $(elem)
                     .show()
                     .animate({ left: '400px' }, duration);
@@ -176,8 +199,9 @@
 			
 			window.setTimeout(function() {
 				//Controller creates parity or mirror blocks
-				$("#data-blocks").append('<div class="parity-block">Parity </div>');
-				$("#data-blocks div.parity-block").show();
+				$("#data-blocks"+lineNr).append('<div class="parity-block">P1'+letter+'</div>');
+				$("#data-blocks"+lineNr).append('<div class="parity-block">P2'+letter+'</div>');
+				$("#data-blocks"+lineNr+" div.parity-block").show();
 			},duration);
             
 			
@@ -185,22 +209,26 @@
 				var left = 130;
 				
 				//Data blocks go to disk
-				$('#data-blocks div.data-block').each(function (i, elem) {
+				var topSpacing = (lineNr*50 + 250)+'px';
+				
+				$("#data-blocks"+lineNr+" div.data-block").each(function (i, elem) {
+					
 					$(elem)
 						.delay(i * delay)
 						.animate({ top: '200px' }, duration)
 						.animate({ left: left + 'px' }, duration)
-						.animate({ top: '300px' }, duration);
+						.animate({ top: topSpacing }, duration);
 						
 					left += diskSpacing;
 				});
 				
 				// Parity blocks go to disk
-				$('#data-blocks div.parity-block').each(function (i, elem) {
+				$("#data-blocks"+lineNr+" div.parity-block").each(function (i, elem) {
+					var spacingLeft = left+ i*diskSpacing;
 					$(elem)
 						.animate({ top: '200px' }, duration)
-						.animate({ left: left + 'px' }, duration)
-						.animate({ top: '300px' }, duration);
+						.animate({ left: spacingLeft + 'px' }, duration)
+						.animate({ top: topSpacing }, duration);
 				});
 			},duration*2);
 			
