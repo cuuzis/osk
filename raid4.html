@@ -94,7 +94,7 @@
 		var diskSpacing = 200;
 		var diskCount = 4;
 		var dataBlockCount = 3;
-		var animationDuration = 200;
+		var animationDuration = 300;
 		var animationDelay = 80;
 		
 		$( document ).ready ( function () {
@@ -133,12 +133,19 @@
         });
 		
 		$("#read").click(function () {
-            WriteDataBlocks(0, 0);
+            WriteDataBlocks(0, 0, 1);
+			WriteDataBlocks(0, 0, 2);
+			WriteDataBlocks(0, 0, 3);
+			WriteDataBlocks(0, 0, 4);
 			window.setTimeout(function() {
-				ReadDataBlocks(animationDelay, animationDuration);
-				window.setTimeout(function() {
-					SendDataToServer(animationDelay, animationDuration);
-				}, animationDuration * 5);
+				ReadDataBlocks(animationDelay, animationDuration, 1); 
+				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 2); } , animationDuration*2 );
+				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 3); } , animationDuration*3 );
+				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 4); } , animationDuration*4 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 1);} , animationDuration*5 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 2);} , animationDuration*6 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 3);} , animationDuration*7 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 4);} , animationDuration*8 );
 			}, animationDuration * 2);
         });
 		
@@ -200,13 +207,13 @@
 			window.setTimeout(function() {
 				//Controller creates parity or mirror blocks
 				$("#data-blocks"+lineNr).append('<div class="parity-block">P1'+letter+'</div>');
-				$("#data-blocks"+lineNr).append('<div class="parity-block">P2'+letter+'</div>');
+				//$("#data-blocks"+lineNr).append('<div class="parity-block">P2'+letter+'</div>');
 				$("#data-blocks"+lineNr+" div.parity-block").show();
 			},duration);
             
 			
 			window.setTimeout(function() {
-				var left = 130;
+				var left = 220;
 				
 				//Data blocks go to disk
 				var topSpacing = (lineNr*50 + 250)+'px';
@@ -234,13 +241,13 @@
 			
 		};
 		
-		function ReadDataBlocks(delay, duration) {
+		function ReadDataBlocks(delay, duration, lineNr) {
 			//Data blocks go to controller											
-			$('#data-blocks div.data-block').each(function (i, elem) {
+			$('#data-blocks' + lineNr + ' div.data-block').each(function (i, elem) {
                 $(elem)
 					.delay(i * delay)
                     .animate({ top: '200px' }, duration)
-                    .animate({ left: '400px' }, duration)
+                    .animate({ left: (400 + ((lineNr %2) * 115)) +'px' }, duration)
 					.animate({ top: i*40+'px' }, duration);
             });
 		};
@@ -256,12 +263,18 @@
             });
 		};
 		
-		function SendDataToServer(delay, duration) {
-			$('#data-blocks div.data-block').each(function (i, elem) {
+		function SendDataToServer(delay, duration, lineNr) {
+			$('#data-blocks' + lineNr + ' div.data-block').each(function (i, elem) {
                 $(elem)
 					.delay(delay)
                     .animate({ left: '100px' }, duration);
             });
+			
+			setTimeout(function () {
+		        $('#data-blocks' + lineNr + ' div.data-block').each(function (i, elem) {
+		            $(elem).hide();
+		        });
+		    }, 2000);
 		};
 		
 		function RuinDisk(index) {
