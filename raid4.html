@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>RAID 5</title>
+    <title>RAID 4</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/raid.css" rel="stylesheet" />
 </head>
@@ -135,7 +135,7 @@
             WriteDataBlocks(0, 0);
 			window.setTimeout(function() {
 				ReadDataBlocks(80, animationDuration);
-				SendDataToServer();
+				//SendDataToServer();
 			},animationDuration*2);
         });
 
