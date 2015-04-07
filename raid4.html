@@ -150,15 +150,23 @@
         });
 		
 		$("#failure").click(function () {
-            WriteDataBlocks(0, 0);
+            WriteDataBlocks(0, 0, 1);
+			WriteDataBlocks(0, 0, 2);
+			WriteDataBlocks(0, 0, 3);
+			WriteDataBlocks(0, 0, 4);
 			RuinDisk(0);
+			HideDataBlocks(1);
 			window.setTimeout(function() {
-				ReadDataBlocks(animationDelay, animationDuration);
-				ReadParity(animationDelay, animationDuration);
-				window.setTimeout(function() {
-					SendDataToServer(animationDelay, animationDuration);
-				}, animationDuration * 5);
-			},animationDuration*2);
+				ReadDataBlocks(animationDelay, animationDuration, 1);//Hidden blocks
+				ReadParity(animationDelay, animationDuration, 1);
+				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 2); ReadParity(animationDelay, animationDuration, 2);} , animationDuration*2 );
+				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 3); ReadParity(animationDelay, animationDuration, 3);} , animationDuration*3 );
+				window.setTimeout(function() {ReadDataBlocks(animationDelay, animationDuration, 4); ReadParity(animationDelay, animationDuration, 4);} , animationDuration*4 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 1); HideParity(1); ShowDataBlocks(1);} , animationDuration*5 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 2); HideParity(2); ShowDataBlocks(2);} , animationDuration*6 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 3); HideParity(3); ShowDataBlocks(3);} , animationDuration*7 );
+				window.setTimeout(function() {SendDataToServer(animationDelay, animationDuration, 4); HideParity(4); ShowDataBlocks(4);} , animationDuration*8 );
+			}, animationDuration * 2);
         });
 
         $("#reload").click(function () {
@@ -166,7 +174,7 @@
         });
 		
 		function WriteDataBlocks(delay, duration, lineNr) {
-			if( $('#DataBlock1').length ) {
+			if( $('#A4').length ) {
 				 return;
 			}
 			
@@ -252,14 +260,14 @@
             });
 		};
 		
-		function ReadParity(delay, duration) {
+		function ReadParity(delay, duration, lineNr) {
 			//Parity blocks go to controller		
-			$('#data-blocks div.parity-block').each(function (i, elem) {
+			$('#data-blocks' + lineNr + ' div.parity-block').each(function (i, elem) {
                 $(elem)
 					.delay(i * delay)
                     .animate({ top: '200px' }, duration)
-                    .animate({ left: '550px' }, duration)
-					.animate({ top: '50px' }, duration);
+                    .animate({ left: (400 + ((lineNr %2) * 115)) +'px' }, duration)
+					.animate({ top: i*40+'px' }, duration);
             });
 		};
 		
@@ -280,6 +288,28 @@
 		function RuinDisk(index) {
 			$("#di" + index).attr("src","Content/Images/diskX.png");
 		};
+		
+		function HideDataBlocks(lineNr) {
+			$('#A1').hide();
+			$('#B1').hide();
+			$('#C1').hide();
+			$('#D1').hide();
+		};
+		
+		function ShowDataBlocks(lineNr) {
+			$('#A1').show();
+			$('#B1').show();
+			$('#C1').show();
+			$('#D1').show();
+		};
+		
+		function HideParity(lineNr) {
+			//Parity blocks go to controller		
+			$('#data-blocks' + lineNr + ' div.parity-block').each(function (i, elem) {
+                $(elem).hide();
+            });
+		};
+		
 		
     </script>
 </body>
