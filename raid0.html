@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>RAID 0</title>
+    <title>RAID 5</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link href="Content/raid.css" rel="stylesheet" />
 </head>
@@ -91,6 +91,8 @@
 		var diskCount = 4;
 		var dataBlockCount = 3;
 		
+		var animationDuration = 200;
+		
 		$( document ).ready ( function () {
 			// Izveido diskus
             var diskImages = [];
@@ -119,22 +121,22 @@
 		
 		
         $("#write").click(function () {
-            WriteDataBlocks(80, 200);
+            WriteDataBlocks(80, animationDuration);
         });
 		
 		$("#read").click(function () {
             WriteDataBlocks(0, 0);
 			window.setTimeout(function() {
-				ReadDataBlocks(80, 200);
-			},200+200);
+				ReadDataBlocks(80, animationDuration);
+			}, animationDuration * 2);
         });
 		
 		$("#failure").click(function () {
             WriteDataBlocks(0, 0);
 			window.setTimeout(function() {
-				ReadDataBlocks(80, 200);
+				ReadDataBlocks(80, animationDuration);
 				SendDataToServer();
-			},200+200);
+			},animationDuration*2);
         });
 
         $("#reload").click(function () {
