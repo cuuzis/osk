@@ -60,7 +60,7 @@
 		var diskSpacing = 200;
 		var diskCount = 4;
 		var dataBlockCount = 3;
-		var animationDuration = 500;
+		var animationDuration = 700;
 		
 		$( document ).ready ( function () {
 			// Izveido diskus
@@ -256,21 +256,20 @@
 		};
 		
 		function HideDataBlocks(lineNr) {
-			$('#A1').hide();
+		HideParity(lineNr);
+			window.setTimeout(function() {HideParity(lineNr); }, 0 );//execution order = wtf
 			$('#B1').hide();
 			$('#C1').hide();
 			$('#D1').hide();
 		};
 		
 		function ShowDataBlocks(lineNr) {
-			$('#A1').show();
 			$('#B1').show();
 			$('#C1').show();
 			$('#D1').show();
 		};
 		
-		function HideParity(lineNr) {
-			//Parity blocks go to controller		
+		function HideParity(lineNr) {		
 			$('#data-blocks' + lineNr + ' div.parity-block').each(function (i, elem) {
                 $(elem).remove();
             });
