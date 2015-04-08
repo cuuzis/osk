@@ -13,17 +13,15 @@
             <div class="btn-group btn-group-lg" role="group" aria-label="...">
                 <a role="button" class="btn btn-default active" href="./raid0.html">0</a>
                 <a role="button" class="btn btn-default" href="./raid1.html">1</a>
-                <button type="button" class="btn btn-default">2</button>
-                <button type="button" class="btn btn-default">3</button>
-                <button type="button" class="btn btn-default">4</button>
-                <button type="button" class="btn btn-default">5</button>
-                <button type="button" class="btn btn-default">6</button>
-                <button type="button" class="btn btn-default">1+0</button>
+                <a role="button" class="btn btn-default" href="./raid2.html">2</a>
+                <a role="button" class="btn btn-default" href="./raid3.html">3</a>
+                <a role="button" class="btn btn-default" href="./raid4.html">4</a>
+                <a role="button" class="btn btn-default" href="./raid5.html">5</a>
+                <a role="button" class="btn btn-default" href="./raid6.html">6</a>
             </div>
         </div>
-
-        
-
+        <hr />
+        <h1>RAID 0</h1>
         <div class="well" style="min-height: 600px;">
             <div class="row">
                 <div class="col-md-1">
@@ -36,7 +34,9 @@
                 <div class="col-md-3" id="data-blocks"></div>
             </div>  
             <div class="row">
-                <div class="col-md-12" id="disk-images"></div>
+                <div class="col-md-12" id="disk-images">
+                    <h3 style="position: absolute; left: 520px; top: 265px">Disk array</h3>
+                </div>
             </div>     
         </div>
         <div class="row">
@@ -48,37 +48,6 @@
             </div>
         </div> 
         <br />
-		
-		<div class="panel panel-primary">
-            <div class="panel-heading">RAID LEVEL 0: Striped Disk Array without Fault Tolerance</div>
-            <div class="panel-body">
-                RAID Level 0 requires a minimum of 2 drives to implement
-            </div>
-            <div class="panel-footer">
-                <b>Characteristics and Advantages</b>
-                <ul>
-                    <li>RAID 0 implements a striped disk array, the data is broken down into blocks and each block is written to a separate disk drive</li>
-                    <li>I/O performance is greatly improved by spreading the I/O load across many channels and drives</li>
-                    <li>Best performance is achieved when data is striped across multiple controllers with only one drive per controller</li>
-                    <li>No parity calculation overhead is involved</li>
-                    <li>Very simple design</li>
-                    <li>Easy to implement</li>
-                </ul>   
-                <b>Disadvantages</b>
-                <ul>
-                    <li>Not a "True" RAID because it is NOT fault-tolerant</li>
-                    <li>The failure of just one drive will result in all data in an array being lost</li>
-                    <li>Should never be used in mission critical environments</li>
-                </ul> 
-                <b>Recommended Applications</b>
-                <ul>
-                    <li>Video Production and Editing</li>
-                    <li>Image Editing</li>
-                    <li>Pre-Press Applications</li>
-                    <li>Any application requiring high bandwidth</li>
-                </ul> 
-            </div>
-        </div>
     </div>
 
     <script src="Scripts/jquery-2.1.3.min.js"></script>
@@ -93,7 +62,7 @@
 
 		var columns = Math.ceil(dataBlockCount / diskCount);
 		
-		var animationDuration = 200;
+		var animationDuration = 500;
 		
 		$( document ).ready ( function () {
 			// Izveido diskus
@@ -106,8 +75,6 @@
                 $("#disk-images").append('<img src="Content/Images/disk.png" id="' + diskImages[i] + '" class="disk-image" />');
             }
 			
-            $("#disk-images").append('<h3 id="diskArrayTitle">Disk array</h3>');
-			
 			var leftImage = 200;
             $('#disk-images img').each(function (i, elem) {
                 $(elem)
@@ -116,9 +83,6 @@
 
                 leftImage += diskSpacing;
             });
-			$('#diskArrayTitle')
-                .animate({ left: '520px' }, "fast")
-                .animate({ top: '265px' }, "fast");
         });
 		
 		
@@ -185,12 +149,11 @@
                     .animate({ left: left + 'px' }, duration);
 
                 counter++;
-            });
-            
-            counter = 0;
+            });         
 
 			window.setTimeout(function() {
-				//Data blocks go to disk
+			    //Data blocks go to disk
+			    counter = 0;
 			    var left = 130;
 			    var top = 300;
 				
@@ -266,7 +229,7 @@
 		}
 
 		function RuinDisk(index) {
-		    $("#di" + 1).attr("src", "Content/Images/diskX.png");
+		    $("#di" + index).attr("src", "Content/Images/diskX.png");
 		};
 
 		function ReadRuinedDataBlocks(delay, duration, ruinedDiskIndex) {
