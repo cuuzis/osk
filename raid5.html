@@ -18,12 +18,10 @@
 				<a role="button" class="btn btn-default" href="./raid4.html">4</a>
 				<button type="button" class="btn btn-default active">5</button>
 				<a role="button" class="btn btn-default" href="./raid6.html">6</a>
-                <button type="button" class="btn btn-default">1+0</button>
             </div>
         </div>
-
-        
-
+        <hr />
+        <h1>RAID 5</h1>
         <div class="well" style="min-height: 600px;">
             <div class="row">
                 <div class="col-md-1">
@@ -48,38 +46,6 @@
                 <button type="button" id="read" class="btn btn-primary btn-lg">Read</button>
 				<button type="button" id="failure" class="btn btn-primary btn-lg">Disk failure</button>
                 <button type="button" id="reload" class="btn btn-default btn-lg">Reload page</button>
-            </div>
-        </div> 
-        <br />
-		
-		<div class="panel panel-primary">
-            <div class="panel-heading">RAID LEVEL 4: ...</div>
-            <div class="panel-body">
-                RAID Level 0 requires a minimum of 2 drives to implement
-            </div>
-            <div class="panel-footer">
-                <b>Characteristics and Advantages</b>
-                <ul>
-                    <li>RAID 0 implements a striped disk array, the data is broken down into blocks and each block is written to a separate disk drive</li>
-                    <li>I/O performance is greatly improved by spreading the I/O load across many channels and drives</li>
-                    <li>Best performance is achieved when data is striped across multiple controllers with only one drive per controller</li>
-                    <li>No parity calculation overhead is involved</li>
-                    <li>Very simple design</li>
-                    <li>Easy to implement</li>
-                </ul>   
-                <b>Disadvantages</b>
-                <ul>
-                    <li>Not a "True" RAID because it is NOT fault-tolerant</li>
-                    <li>The failure of just one drive will result in all data in an array being lost</li>
-                    <li>Should never be used in mission critical environments</li>
-                </ul> 
-                <b>Recommended Applications</b>
-                <ul>
-                    <li>Video Production and Editing</li>
-                    <li>Image Editing</li>
-                    <li>Pre-Press Applications</li>
-                    <li>Any application requiring high bandwidth</li>
-                </ul> 
             </div>
         </div>
     </div>
