@@ -281,6 +281,10 @@
 
     function RuinDisk(index) {
         $("#di" + index).attr("src", "Content/Images/diskX.png");
+
+        $('#data-blocks div.data-block').slice(0, 4).each(function (i, elem) {
+            $(elem).hide();
+        });
     };
 
     function ReadRuinedDataBlocks(delay, duration, ruinedDiskIndex) {
