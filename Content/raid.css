@@ -53,3 +53,16 @@
 .blockrows{
   position: absolute;
 }
+
+.mirrored-block {
+    background: green; 
+    height: 32px; 
+    width: 105px; 
+    border-radius: 5px;
+    position: absolute; 
+    display: none;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    z-index: 2;
+}
